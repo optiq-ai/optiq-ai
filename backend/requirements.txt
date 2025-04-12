@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+asyncpg
+pyyaml
+requests
+uuid

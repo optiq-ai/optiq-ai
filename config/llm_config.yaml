@@ -1,0 +1,37 @@
+llms:
+  openai_gpt4:
+    type: openai
+    endpoint: https://api.openai.com/v1/chat/completions
+    model: gpt-4
+    key_env: OPENAI_API_KEY
+
+  together_mistral:
+    type: together
+    endpoint: https://api.together.xyz/v1/chat/completions
+    model: mistral-7b-instruct
+    key_env: TOGETHER_API_KEY
+
+  ollama_codellama:
+    type: ollama
+    endpoint: http://ollama:11434
+    model: codellama
+
+  ollama_mistral:
+    type: ollama
+    endpoint: http://ollama:11434
+    model: mistral
+
+  anthropic_claude:
+    type: openai
+    endpoint: https://api.anthropic.com/v1/complete
+    model: claude-v1
+    key_env: CLAUDE_API_KEY
+
+  custom_local:
+    type: custom
+    endpoint: http://localhost:9000/api/generate
+    method: POST
+    headers:
+      Authorization: "Bearer {{API_KEY}}"
+    body_template:
+      prompt: "{{prompt}}"

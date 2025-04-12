@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sandbox Preview</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #fff;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+        padding: 1rem;
+      }
+
+      .error {
+        color: red;
+        background: #fee;
+        border: 1px solid #f88;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">Wczytywanie sandboxu...</div>
+
+    <script type="module">
+      window.addEventListener("message", (event) => {
+        const code = event.data?.code || "";
+        const language = event.data?.language || "js";
+
+        const container = document.getElementById("root");
+        container.innerHTML = "";
+
+        if (language === "js") {
+          const script = document.createElement("script");
+          script.type = "module";
+          script.textContent = code;
+          container.appendChild(script);
+        } else if (language === "html") {
+          container.innerHTML = code;
+        } else {
+          container.innerHTML = `<pre class="error">Nieobsługiwany język: ${language}</pre>`;
+        }
+      });
+    </script>
+  </body>
+</html>

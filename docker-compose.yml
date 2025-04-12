@@ -1,0 +1,51 @@
+version: "3.9"
+
+networks:
+  optiq_prod:
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - optiq_prod
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    networks:
+      - optiq_prod
+    environment:
+      - DB_URL=postgresql://user:pass@postgres:5432/sandbox
+      - LLM_CONFIG=/app/config/llm_config.yaml
+    volumes:
+      - ./logs:/app/logs
+
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: sandbox
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - optiq_prod
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - optiq_prod
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  postgres_data:
+  ollama_data:
