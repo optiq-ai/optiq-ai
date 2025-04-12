@@ -7,7 +7,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3003:3003"
     networks:
       - optiq_prod
     depends_on:
@@ -16,7 +16,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "8008:8008"
     networks:
       - optiq_prod
     environment:
